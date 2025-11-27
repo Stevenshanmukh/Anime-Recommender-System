@@ -4,12 +4,20 @@ from pathlib import Path
 import zipfile
 import os
 
+# Get current directory
+CURRENT_DIR = Path(__file__).parent
+
 @st.cache_resource
 def download_model_files():
     """Download large model files from GitHub Releases if not present"""
     
-    files_needed = ['embeddings_combined.npy', 'faiss_index_ivf.bin']
-    all_exist = all(Path(f).exists() for f in files_needed)
+    # Check in current directory
+    files_needed = [
+        CURRENT_DIR / 'embeddings_combined.npy',
+        CURRENT_DIR / 'faiss_index_ivf.bin'
+    ]
+    
+    all_exist = all(f.exists() for f in files_needed)
     
     if all_exist:
         return True
@@ -23,25 +31,21 @@ def download_model_files():
     try:
         # Download
         with st.spinner("Downloading model files..."):
-            response = requests.get(release_url, stream=True)
+            response = requests.get(release_url, stream=True, timeout=300)
             response.raise_for_status()
             
-            zip_path = Path("model_files.zip")
+            zip_path = CURRENT_DIR / "model_files.zip"
             
             # Save file
-            total_size = int(response.headers.get('content-length', 0))
-            downloaded = 0
-            
             with open(zip_path, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
-                        downloaded += len(chunk)
         
-        # Extract
+        # Extract to current directory
         with st.spinner("Extracting files..."):
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                zip_ref.extractall('.')
+                zip_ref.extractall(CURRENT_DIR)
         
         # Cleanup
         zip_path.unlink()

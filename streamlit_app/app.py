@@ -4,6 +4,9 @@ import numpy as np
 from pathlib import Path
 from download_helper import download_model_files
 
+# Get current directory
+CURRENT_DIR = Path(__file__).parent
+
 # Page config
 st.set_page_config(
     page_title="Anime Recommender System",
@@ -33,19 +36,13 @@ st.markdown("""
         color: #666;
         margin-bottom: 2rem;
     }
-    .metric-card {
-        background-color: #f0f2f6;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        margin: 0.5rem 0;
-    }
 </style>
 """, unsafe_allow_html=True)
 
-# Load data
+# Load data with correct path
 @st.cache_data
 def load_data():
-    df = pd.read_parquet('anime_features.parquet')
+    df = pd.read_parquet(CURRENT_DIR / 'anime_features.parquet')
     return df
 
 df = load_data()
@@ -54,20 +51,16 @@ df = load_data()
 st.markdown('<div class="main-header">🎬 Anime Recommender System</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-header">AI-Powered Recommendations with Multi-Modal Deep Learning</div>', unsafe_allow_html=True)
 
-# System overview
 st.markdown("---")
 
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.metric("📊 Total Anime", f"{len(df):,}")
-    
 with col2:
     st.metric("⚡ Search Speed", "5ms")
-    
 with col3:
     st.metric("🎯 NDCG Score", "1.0")
-    
 with col4:
     st.metric("⭐ Avg Quality", "7.93/10")
 
@@ -83,7 +76,7 @@ with col1:
     st.markdown("""
     - **Single Title**: Find anime similar to one you love
     - **Multi-Title**: Combine multiple preferences
-    - **Profile-Based**: Get recommendations from genres/themes
+    - **Data Explorer**: Browse statistics and visualizations
     """)
     
     st.subheader("🧠 AI Technology")
@@ -111,36 +104,26 @@ with col2:
     - Coverage: **345+ anime**
     """)
 
-# How it works
 st.markdown("---")
 st.header("⚙️ How It Works")
 
 st.markdown("""
 1. **Input**: Select an anime or describe preferences
-2. **Candidate Generation**: FAISS retrieves 50 similar anime (<5ms)
+2. **Candidate Generation**: FAISS retrieves similar anime (<5ms)
 3. **Feature Extraction**: 20 features computed per candidate
 4. **Ranking**: LightGBM model predicts optimal order
 5. **Explanation**: SHAP values generate human-readable reasons
 """)
 
-# Get started
 st.markdown("---")
 st.header("🎯 Get Started")
 
-st.info("👈 Use the sidebar to navigate to different features:")
-st.markdown("""
-- **Explore Data**: Browse the dataset and statistics
-- **Single Recommend**: Get recommendations for one anime
-- **Multi-Title**: Combine multiple anime preferences  
-- **Model Card**: View detailed model performance
-""")
+st.info("👈 Use the sidebar to navigate to different features!")
 
-# Footer
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #666; padding: 2rem 0;'>
     <p>Built with Streamlit • Powered by LightGBM & FAISS</p>
-    <p>Multi-Modal Deep Learning Recommendation System</p>
-    <p><a href="https://github.com/Stevenshanmukh/Anime-Recommender-System" target="_blank">View on GitHub</a></p>
+    <p><a href="https://github.com/Stevenshanmukh/Anime-Recommender-System" target="_blank">⭐ View on GitHub</a></p>
 </div>
 """, unsafe_allow_html=True)
