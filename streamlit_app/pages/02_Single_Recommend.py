@@ -89,6 +89,7 @@ def explain_recommendation(query_idx, rec_idx):
         elif rec_score >= 7.0:
             explanations.append(f"✓ Well-rated ({rec_score:.2f}/10)")
     
+    # Genre overlap
     query_genres = set(df.loc[query_idx, 'genres_list'])
     rec_genres = set(df.loc[rec_idx, 'genres_list'])
     shared = query_genres & rec_genres
@@ -97,12 +98,14 @@ def explain_recommendation(query_idx, rec_idx):
     elif len(shared) == 1:
         explanations.append(f"🎭 Shares genre: {list(shared)[0]}")
     
+    # Studio overlap
     query_studios = set(df.loc[query_idx, 'studios_list'])
     rec_studios = set(df.loc[rec_idx, 'studios_list'])
     shared_studios = query_studios & rec_studios
     if shared_studios and 'Unknown' not in shared_studios:
         explanations.append(f"🎬 Same studio: {list(shared_studios)[0]}")
     
+    # Popularity
     members = df.loc[rec_idx, 'Members']
     if members > 1000000:
         explanations.append(f"👥 Very popular ({members:,.0f} members)")
@@ -111,10 +114,15 @@ def explain_recommendation(query_idx, rec_idx):
 
 # UI
 st.title("🎯 Single Anime Recommendations")
-st.markdown("Get personalized recommendations based on a single anime you love!")
+
+st.markdown("""
+Get personalized recommendations based on a single anime you love!
+The system uses multi-modal deep learning to find similar anime.
+""")
 
 # Search
 st.subheader("Select an Anime")
+
 search_query = st.text_input("🔍 Search by title", placeholder="e.g., Death Note, Naruto...")
 
 if search_query:
@@ -129,6 +137,7 @@ if search_query:
         if selected:
             query_idx = anime_options[selected]
             
+            # Display selected anime
             st.markdown("---")
             col1, col2 = st.columns([1, 2])
             
@@ -144,7 +153,10 @@ if search_query:
                 st.subheader("Info")
                 st.write(f"**Genres:** {', '.join(df.loc[query_idx, 'genres_list'])}")
                 st.write(f"**Studios:** {', '.join(df.loc[query_idx, 'studios_list'][:3])}")
+                if df.loc[query_idx, 'description']:
+                    st.write(f"**Description:** {df.loc[query_idx, 'description'][:200]}...")
             
+            # Get recommendations
             st.markdown("---")
             st.subheader("🎬 Recommended Anime")
             
@@ -153,6 +165,7 @@ if search_query:
             with st.spinner("Generating recommendations..."):
                 recs, scores = get_recommendations(query_idx, k=num_recs)
             
+            # Display recommendations
             for i, rec_idx in enumerate(recs, 1):
                 with st.expander(f"#{i} - {df.loc[rec_idx, 'title']}", expanded=(i<=3)):
                     col1, col2 = st.columns([1, 2])
@@ -165,6 +178,8 @@ if search_query:
                     
                     with col2:
                         st.write(f"**Genres:** {', '.join(df.loc[rec_idx, 'genres_list'])}")
+                        
+                        # Explanation
                         st.write("**Why recommended:**")
                         explanations = explain_recommendation(query_idx, rec_idx)
                         for exp in explanations:
@@ -173,6 +188,9 @@ if search_query:
         st.warning("No anime found matching your search.")
 else:
     st.info("👆 Enter an anime title to get started!")
+    
+    # Show popular anime as examples
     st.subheader("Popular Anime Examples")
+    
     popular = df.nlargest(10, 'Members')[['title', 'Score', 'Type', 'Members']]
     st.dataframe(popular, use_container_width=True)
