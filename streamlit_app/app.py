@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from pathlib import Path
+from download_helper import download_model_files
 
 # Page config
 st.set_page_config(
@@ -10,6 +11,11 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Download model files if needed (runs once, cached)
+if not download_model_files():
+    st.error("Failed to download model files. Please try again or download manually.")
+    st.stop()
 
 # Custom CSS
 st.markdown("""
@@ -135,5 +141,6 @@ st.markdown("""
 <div style='text-align: center; color: #666; padding: 2rem 0;'>
     <p>Built with Streamlit • Powered by LightGBM & FAISS</p>
     <p>Multi-Modal Deep Learning Recommendation System</p>
+    <p><a href="https://github.com/Stevenshanmukh/Anime-Recommender-System" target="_blank">View on GitHub</a></p>
 </div>
 """, unsafe_allow_html=True)

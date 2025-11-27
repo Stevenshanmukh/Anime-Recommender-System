@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 from pathlib import Path
-import tarfile
+import zipfile
 import os
 
 @st.cache_resource
@@ -14,43 +14,48 @@ def download_model_files():
     if all_exist:
         return True
     
-    st.info("⏳ First-time setup: Downloading model files (555MB)...")
-    st.warning("This will take 2-3 minutes. Please wait...")
+    st.info("⏳ First-time setup: Downloading model files (~200 MB compressed)...")
+    st.warning("This will take 2-3 minutes on first run. Please wait...")
     
-    # GitHub Release URL (update after creating release)
-    release_url = "https://github.com/Stevenshanmukh/Anime-Recommender-System/releases/download/v1.0.0/model_files.tar.gz"
+    # Your GitHub Release URL
+    release_url = "https://github.com/Stevenshanmukh/Anime-Recommender-System/releases/download/v1.0.0/model_files.zip"
     
     try:
         # Download
-        response = requests.get(release_url, stream=True)
-        response.raise_for_status()
-        
-        tar_path = Path("model_files.tar.gz")
-        
-        # Save with progress
-        total_size = int(response.headers.get('content-length', 0))
-        progress_bar = st.progress(0)
-        
-        with open(tar_path, 'wb') as f:
+        with st.spinner("Downloading model files..."):
+            response = requests.get(release_url, stream=True)
+            response.raise_for_status()
+            
+            zip_path = Path("model_files.zip")
+            
+            # Save file
+            total_size = int(response.headers.get('content-length', 0))
             downloaded = 0
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-                downloaded += len(chunk)
-                if total_size:
-                    progress_bar.progress(downloaded / total_size)
+            
+            with open(zip_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+                        downloaded += len(chunk)
         
         # Extract
-        st.info("📦 Extracting files...")
-        with tarfile.open(tar_path, 'r:gz') as tar:
-            tar.extractall()
+        with st.spinner("Extracting files..."):
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                zip_ref.extractall('.')
         
         # Cleanup
-        tar_path.unlink()
+        zip_path.unlink()
         
-        st.success("✅ Model files ready!")
+        st.success("✅ Model files downloaded and ready!")
+        st.balloons()
         return True
         
     except Exception as e:
         st.error(f"❌ Download failed: {e}")
-        st.info("Please download manually from GitHub Releases")
+        st.info("""
+        **Manual download:**
+        1. Download from: https://github.com/Stevenshanmukh/Anime-Recommender-System/releases/tag/v1.0.0
+        2. Extract model_files.zip to streamlit_app/
+        3. Restart the app
+        """)
         return False
