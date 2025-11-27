@@ -1,0 +1,29 @@
+{
+  "dimensions": 3647,
+  "n_vectors": 19931,
+  "indices": {
+    "flat": {
+      "type": "IndexFlatIP",
+      "metric": "inner_product",
+      "exact": true,
+      "avg_search_time_ms": 22.75653334800154
+    },
+    "ivf": {
+      "type": "IndexIVFFlat",
+      "metric": "inner_product",
+      "nlist": 100,
+      "nprobe": 10,
+      "exact": false,
+      "avg_search_time_ms": 5.090566662450631,
+      "speedup": 4.47033402309801,
+      "quality_retention": 0.875
+    }
+  },
+  "embeddings": {
+    "text_weight": 0.85,
+    "graph_weight": 0.15,
+    "text_dims": 3573,
+    "graph_dims": 74,
+    "total_dims": 3647
+  }
+}

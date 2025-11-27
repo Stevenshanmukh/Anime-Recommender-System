@@ -1,0 +1,47 @@
+{
+  "models": {
+    "content_based": {
+      "name": "Content-Based (FAISS)",
+      "type": "similarity",
+      "index": "faiss_index_ivf.bin",
+      "metrics": {
+        "avg_score": 7.31361111111111,
+        "genre_overlap": 2.1699999999999995,
+        "diversity": 6.9
+      },
+      "use_case": "Similar anime recommendations"
+    },
+    "popularity_based": {
+      "name": "Popularity-Based",
+      "type": "ranking",
+      "sort_by": "Members",
+      "metrics": {
+        "avg_score": 8.316600000000001,
+        "genre_overlap": 0.89,
+        "diversity": 9.9
+      },
+      "use_case": "Trending/popular section"
+    },
+    "hybrid": {
+      "name": "Hybrid (\u03b1=0.7)",
+      "type": "hybrid",
+      "alpha": 0.7,
+      "components": [
+        "content_similarity",
+        "popularity"
+      ],
+      "metrics": {
+        "avg_score": 7.708922222222222,
+        "genre_overlap": 2.07,
+        "diversity": 7.5
+      },
+      "use_case": "Primary recommendation engine",
+      "best_model": true
+    }
+  },
+  "evaluation": {
+    "test_size": 10,
+    "k": 10,
+    "best_model": "hybrid"
+  }
+}

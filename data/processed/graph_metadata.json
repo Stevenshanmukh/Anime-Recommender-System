@@ -1,0 +1,20 @@
+{
+  "total_dimensions": 74,
+  "svd_dimensions": 64,
+  "feature_dimensions": 10,
+  "n_samples": 19931,
+  "method": "SVD on anime-studio-producer network",
+  "graph_stats": {
+    "nodes": 22736,
+    "edges": 45000,
+    "anime_nodes": 19931,
+    "studio_nodes": 1173,
+    "producer_nodes": 1632,
+    "density": 0.00017411391879048246
+  },
+  "quality_metrics": {
+    "avg_similarity": 0.9732483370549915,
+    "studio_connection_rate": 1.0,
+    "producer_connection_rate": 1.0
+  }
+}

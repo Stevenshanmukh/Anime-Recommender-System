@@ -1,0 +1,30 @@
+{
+  "total_dimensions": 3573,
+  "text_dimensions": 3500,
+  "metadata_dimensions": 73,
+  "n_samples": 19931,
+  "method": "Hybrid TF-IDF + Genre/Theme",
+  "components": {
+    "word_tfidf": {
+      "dims": 2000,
+      "weight": 0.5
+    },
+    "char_tfidf": {
+      "dims": 1000,
+      "weight": 0.25
+    },
+    "title_tfidf": {
+      "dims": 500,
+      "weight": 0.25
+    },
+    "genre_theme": {
+      "dims": 73,
+      "weight": 0.25
+    }
+  },
+  "quality_metrics": {
+    "avg_similarity": 0.4093846634139656,
+    "avg_genre_overlap": 2.4,
+    "avg_perfect_matches": 6.6
+  }
+}

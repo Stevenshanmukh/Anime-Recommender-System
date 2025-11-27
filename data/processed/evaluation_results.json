@@ -1,0 +1,76 @@
+{
+  "model": "LightGBM LambdaRank",
+  "test_size": 40,
+  "metrics": {
+    "quality": {
+      "avg_score": 7.928974999999999,
+      "std_score": 0.566256853711282,
+      "min_score": 6.5,
+      "max_score": 8.614999999999998
+    },
+    "relevance": {
+      "avg_genre_overlap": 1.7325000000000004,
+      "std_genre_overlap": 0.7461191258773628,
+      "min_overlap": 0.0,
+      "max_overlap": 3.0
+    },
+    "diversity": {
+      "avg_unique_genres": 6.225,
+      "std_unique_genres": 2.5834811785650773,
+      "coverage": 345,
+      "coverage_rate": 0.01730971852892479
+    }
+  },
+  "shap_analysis": {
+    "top_features": [
+      {
+        "Feature": "cand_score",
+        "Avg_Abs_SHAP": 0.26261652475081576
+      },
+      {
+        "Feature": "is_highly_rated",
+        "Avg_Abs_SHAP": 0.08994602091903353
+      },
+      {
+        "Feature": "cand_log_favorites",
+        "Avg_Abs_SHAP": 0.017028363180257817
+      },
+      {
+        "Feature": "cosine_sim",
+        "Avg_Abs_SHAP": 0.004676742295680047
+      },
+      {
+        "Feature": "cand_log_members",
+        "Avg_Abs_SHAP": 0.0022490207295166546
+      },
+      {
+        "Feature": "genre_jaccard",
+        "Avg_Abs_SHAP": 0.0020866681958630804
+      },
+      {
+        "Feature": "studio_overlap",
+        "Avg_Abs_SHAP": 0.001053362001830299
+      },
+      {
+        "Feature": "degree",
+        "Avg_Abs_SHAP": 0.0009475347145739764
+      },
+      {
+        "Feature": "pagerank",
+        "Avg_Abs_SHAP": 0.0006933608745438734
+      },
+      {
+        "Feature": "n_producers",
+        "Avg_Abs_SHAP": 0.0005551191046077209
+      }
+    ]
+  },
+  "explanation_types": [
+    "Quality indicators (score-based)",
+    "Content similarity (embedding-based)",
+    "Genre matching",
+    "Studio connections",
+    "Community validation",
+    "Popularity signals"
+  ]
+}
