@@ -6,15 +6,14 @@
 
 **World-Class Multi-Modal Deep Learning Recommendation System**
 
-Achieved **Perfect NDCG@10 = 1.0** | 5ms Search Speed | Explainable AI
+Achieved **High Ranking Quality** | Explainable AI
 
-[🔗 Live Demo](YOUR_STREAMLIT_URL_HERE) | [📊 Model Card](streamlit_app/pages/04_Model_Card.py)
+[🔗 Live Demo](https://anime-recommender-system-1.streamlit.app/) | [📊 Model Card](streamlit_app/pages/04_Model_Card.py)
 
 ---
 
 ## 🏆 Key Achievements
 
-- ⚡ **Lightning Fast**: 5ms average search time
 - 🧠 **Multi-Modal**: Text (3,573D) + Graph (74D) embeddings
 - 💡 **Explainable**: SHAP values + natural language
 - 🎯 **High Quality**: 7.93/10 average recommendations
@@ -25,15 +24,19 @@ Achieved **Perfect NDCG@10 = 1.0** | 5ms Search Speed | Explainable AI
 ## 🎯 Features
 
 ### 🔍 Recommendation Modes
-- **Single Title**: Find anime similar to one you love
-- **Multi-Title**: Combine 2-5 anime preferences
-- **Profile-Based**: Recommendations from genres/themes
+**1. Single Title Recommendations**
+Find anime similar to one you love based on plot, genre, and style.
+![Single Title Interface](assets/screenshots/single_anime_recs_ui.png)
+
+**2. Multi-Title Recommendations**
+Combine 2-5 anime preferences to find shows that match your diverse tastes.
+![Multi-Title Interface](assets/screenshots/multi_title_recs_ui.png)
 
 ### 🧠 AI Technology Stack
 - **Text Embeddings**: TF-IDF hybrid (word + char + title)
 - **Graph Embeddings**: SVD on studio-producer network
 - **Ranking Model**: LightGBM LambdaRank
-- **Search Engine**: FAISS for sub-5ms retrieval
+- **Search Engine**: FAISS for efficient retrieval
 - **Explainability**: SHAP feature importance
 
 ### 💡 Explainable Recommendations
@@ -50,9 +53,7 @@ Every recommendation includes:
 
 | Metric | Value | Description |
 |--------|-------|-------------|
-| **NDCG@10** | 1.0000 | Perfect ranking quality |
 | **Avg Score** | 7.93/10 | High recommendation quality |
-| **Search Speed** | 5ms | Lightning-fast retrieval |
 | **Genre Relevance** | 1.73 | Balanced similarity |
 | **Diversity** | 6.2 genres | Good variety |
 | **Coverage** | 345 anime | Explores catalog |
@@ -76,7 +77,7 @@ Every recommendation includes:
          ┌────────────────────────┐
          │   FAISS Index (IVF)     │
          │   • Retrieve 50 cands   │
-         │   • < 5ms search        │
+         │   • Efficient search    │
          └────────┬────────────────┘
                   │
                   ▼
@@ -90,7 +91,7 @@ Every recommendation includes:
          ┌────────────────────────┐
          │  LightGBM Ranker        │
          │  • LambdaRank objective │
-         │  • NDCG = 1.0           │
+         │  • Optimized Ranking    │
          └────────┬────────────────┘
                   │
                   ▼
@@ -229,14 +230,14 @@ anime-recommender/
 
 ### Baseline Comparison
 
-| Model | Avg Score | Genre Overlap | Speed |
-|-------|-----------|---------------|-------|
-| Content-Based | 7.31 | 2.17 | 5ms |
-| Popularity | 8.32 | 0.89 | 1ms |
-| Hybrid | 7.71 | 2.07 | 5ms |
-| **LightGBM LTR** | **7.93** | **1.73** | **6ms** |
+| Model | Avg Score | Genre Overlap |
+|-------|-----------|---------------|
+| Content-Based | 7.31 | 2.17 |
+| Popularity | 8.32 | 0.89 |
+| Hybrid | 7.71 | 2.07 |
+| **LightGBM LTR** | **7.93** | **1.73** |
 
-**Winner: LightGBM LTR** - Best balance of quality, relevance, and speed.
+**Winner: LightGBM LTR** - Best balance of quality and relevance.
 
 ### Feature Importance (SHAP)
 
