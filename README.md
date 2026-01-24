@@ -14,7 +14,6 @@ Achieved **Perfect NDCG@10 = 1.0** | 5ms Search Speed | Explainable AI
 
 ## 🏆 Key Achievements
 
-- ✅ **Perfect Ranking Score**: NDCG@10 = 1.0
 - ⚡ **Lightning Fast**: 5ms average search time
 - 🧠 **Multi-Modal**: Text (3,573D) + Graph (74D) embeddings
 - 💡 **Explainable**: SHAP values + natural language
@@ -222,7 +221,6 @@ anime-recommender/
 
 **Performance:**
 - Train NDCG@10: 0.9972
-- Validation NDCG@10: 1.0000 ✨
 - Fast convergence (3 iterations)
 
 ---
@@ -346,8 +344,5 @@ Questions? Reach out!
 
 <div align="center">
 
-**⭐ Star this repo if you found it helpful! ⭐**
-
-Built with ❤️ and lots of ☕
 
 </div>
